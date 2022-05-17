@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,16 +35,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         Contact contact = contacts.get(position);
         TextView tvContactName = vh.itemView.findViewById(R.id.tvContactName);
         TextView tvContactNumber = vh.itemView.findViewById(R.id.tvContactNumber);
-        View ly = vh.itemView.findViewById(R.id.lyBase);
 
         tvContactName.setText(contact.name);
         tvContactNumber.setText(contact.number);
-        ly.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("APP_VJ20202", "click en el elemento" + contact.id);
-            }
-        });
 
     }
 
@@ -52,10 +46,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return contacts.size();
     }
 
-    class ContactViewHolder extends RecyclerView.ViewHolder {
+    class ContactViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemClickListener {
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Contact contact = contacts.get(i);
+            Log.i("APP_VJ20202", "click en el elemento" + contact.id);
         }
     }
 }
