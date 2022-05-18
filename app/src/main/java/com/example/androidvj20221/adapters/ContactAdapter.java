@@ -1,5 +1,6 @@
 package com.example.androidvj20221.adapters;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +10,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidvj20221.R;
+import com.example.androidvj20221.SecondActivity;
 import com.example.androidvj20221.entities.Contact;
+import com.example.androidvj20221.services.ContactService;
+import com.google.gson.Gson;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
@@ -32,12 +43,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder vh, int position) {
+
+        View itemView = vh.itemView;
+
         Contact contact = contacts.get(position);
-        TextView tvContactName = vh.itemView.findViewById(R.id.tvContactName);
-        TextView tvContactNumber = vh.itemView.findViewById(R.id.tvContactNumber);
+        TextView tvContactName = itemView.findViewById(R.id.tvContactName);
+        TextView tvContactNumber = itemView.findViewById(R.id.tvContactNumber);
 
         tvContactName.setText(contact.name);
         tvContactNumber.setText(contact.number);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(itemView.getContext(), SecondActivity.class);
+                itemView.getContext().startActivity(intent);
+            }
+        });
 
     }
 

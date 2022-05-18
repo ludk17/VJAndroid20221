@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://run.mocky.io")
+                .baseUrl("https://6284e8e6a48bd3c40b77c234.mockapi.io/api/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ContactService service = retrofit.create(ContactService.class);
-        Call<List<Contact>> call = service.GetContacts();
+        Call<List<Contact>> call = service.getContacts();
 
         call.enqueue(new Callback<List<Contact>>() {
             @Override
