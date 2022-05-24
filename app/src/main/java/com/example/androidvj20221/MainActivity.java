@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.androidvj20221.adapters.ContactAdapter;
 import com.example.androidvj20221.adapters.StringAdapter;
 import com.example.androidvj20221.entities.Contact;
+import com.example.androidvj20221.factories.RetrofitFactory;
 import com.example.androidvj20221.services.ContactService;
 import com.google.gson.Gson;
 
@@ -44,12 +45,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://6284e8e6a48bd3c40b77c234.mockapi.io/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+        Retrofit retrofit = RetrofitFactory.build();
         ContactService service = retrofit.create(ContactService.class);
+
         Call<List<Contact>> call = service.getContacts();
 
         call.enqueue(new Callback<List<Contact>>() {

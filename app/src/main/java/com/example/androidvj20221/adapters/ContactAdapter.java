@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidvj20221.R;
 import com.example.androidvj20221.SecondActivity;
 import com.example.androidvj20221.entities.Contact;
+import com.example.androidvj20221.factories.RetrofitFactory;
 import com.example.androidvj20221.services.ContactService;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,15 +52,39 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         Contact contact = contacts.get(position);
         TextView tvContactName = itemView.findViewById(R.id.tvContactName);
         TextView tvContactNumber = itemView.findViewById(R.id.tvContactNumber);
+        ImageView ivAvatar = itemView.findViewById(R.id.ivAvatar );
 
         tvContactName.setText(contact.name);
         tvContactNumber.setText(contact.number);
+        Picasso.get().load("https://loremflickr.com/cache/resized/5238_30052482366_fc6e9350d5_b_640_480_nofilter.jpg").into(ivAvatar);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(itemView.getContext(), SecondActivity.class);
-                itemView.getContext().startActivity(intent);
+//                Intent intent = new Intent(itemView.getContext(), SecondActivity.class);
+//                itemView.getContext().startActivity(intent);
+
+                Retrofit retrofit = RetrofitFactory.build();
+                ContactService service = retrofit.create(ContactService.class);
+
+                Call<Contact> call = service.delete(contact.id);
+
+                call.enqueue(new Callback<Contact>() {
+                    @Override
+                    public void onResponse(Call<Contact> call, Response<Contact> response) {
+                        if (response.isSuccessful()) {
+                            Log.i("APP_VJ20202", "Se elimino correctamente al contacto " + contact.id);
+
+                            // que debe ir aqui para eliminarlo de mi lista
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Contact> call, Throwable t) {
+                        Log.e("APP_VJ20202", "No nos podemos conectar al servicio web");
+                    }
+                });
+
             }
         });
 
