@@ -7,15 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidvj20221.ContactActivity;
 import com.example.androidvj20221.R;
-import com.example.androidvj20221.SecondActivity;
 import com.example.androidvj20221.entities.Contact;
 import com.example.androidvj20221.factories.RetrofitFactory;
 import com.example.androidvj20221.services.ContactService;
@@ -28,7 +26,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
@@ -61,30 +58,42 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(itemView.getContext(), SecondActivity.class);
-//                itemView.getContext().startActivity(intent);
+                Intent intent = new Intent(itemView.getContext(), ContactActivity.class);
 
-                Retrofit retrofit = RetrofitFactory.build();
-                ContactService service = retrofit.create(ContactService.class);
+                String contactJSON = new Gson().toJson(contact);
+                intent.putExtra("CONTACT", contactJSON);
 
-                Call<Contact> call = service.delete(contact.id);
+                itemView.getContext().startActivity(intent);
+            }
+        });
 
-                call.enqueue(new Callback<Contact>() {
-                    @Override
-                    public void onResponse(Call<Contact> call, Response<Contact> response) {
-                        if (response.isSuccessful()) {
-                            Log.i("APP_VJ20202", "Se elimino correctamente al contacto " + contact.id);
+    }
 
-                            // que debe ir aqui para eliminarlo de mi lista
-                        }
-                    }
+    private void removeItem(int position) {
+        Contact contact = contacts.get(position);
 
-                    @Override
-                    public void onFailure(Call<Contact> call, Throwable t) {
-                        Log.e("APP_VJ20202", "No nos podemos conectar al servicio web");
-                    }
-                });
+        Retrofit retrofit = RetrofitFactory.build();
+        ContactService service = retrofit.create(ContactService.class);
 
+        Call<Contact> call = service.delete(contact.id);
+
+        call.enqueue(new Callback<Contact>() {
+            @Override
+            public void onResponse(Call<Contact> call, Response<Contact> response) {
+                if (response.isSuccessful()) {
+                    Log.i("APP_VJ20202", "Se elimino correctamente al contacto " + contact.id);
+                    contacts.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, contacts.size());
+
+                } else {
+                    Log.e("APP_VJ20202", "No se pudo eliminar el contacto");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Contact> call, Throwable t) {
+                Log.e("APP_VJ20202", "No nos podemos conectar al servicio web");
             }
         });
 

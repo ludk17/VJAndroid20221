@@ -43,5 +43,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringView
         public StringViewHolder(@NonNull View itemView) {
             super(itemView);
         }
+
+
     }
 }
