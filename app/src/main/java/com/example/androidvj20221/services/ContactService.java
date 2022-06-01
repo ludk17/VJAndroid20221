@@ -8,12 +8,13 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ContactService {
-    @GET("contacts")
+    @GET("c236cb7f-f90b-41c5-8985-70c4ad6cbbae")
     Call<List<Contact>> getContacts();
 
     // contacts/:id

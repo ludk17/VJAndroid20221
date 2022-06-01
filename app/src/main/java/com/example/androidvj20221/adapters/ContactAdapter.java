@@ -69,35 +69,35 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     }
 
-    private void removeItem(int position) {
-        Contact contact = contacts.get(position);
-
-        Retrofit retrofit = RetrofitFactory.build();
-        ContactService service = retrofit.create(ContactService.class);
-
-        Call<Contact> call = service.delete(contact.id);
-
-        call.enqueue(new Callback<Contact>() {
-            @Override
-            public void onResponse(Call<Contact> call, Response<Contact> response) {
-                if (response.isSuccessful()) {
-                    Log.i("APP_VJ20202", "Se elimino correctamente al contacto " + contact.id);
-                    contacts.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, contacts.size());
-
-                } else {
-                    Log.e("APP_VJ20202", "No se pudo eliminar el contacto");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Contact> call, Throwable t) {
-                Log.e("APP_VJ20202", "No nos podemos conectar al servicio web");
-            }
-        });
-
-    }
+//    private void removeItem(int position) {
+//        Contact contact = contacts.get(position);
+//
+//        Retrofit retrofit = RetrofitFactory.build();
+//        ContactService service = retrofit.create(ContactService.class);
+//
+//        Call<Contact> call = service.delete(contact.id);
+//
+//        call.enqueue(new Callback<Contact>() {
+//            @Override
+//            public void onResponse(Call<Contact> call, Response<Contact> response) {
+//                if (response.isSuccessful()) {
+//                    Log.i("APP_VJ20202", "Se elimino correctamente al contacto " + contact.id);
+//                    contacts.remove(position);
+//                    notifyItemRemoved(position);
+//                    notifyItemRangeChanged(position, contacts.size());
+//
+//                } else {
+//                    Log.e("APP_VJ20202", "No se pudo eliminar el contacto");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Contact> call, Throwable t) {
+//                Log.e("APP_VJ20202", "No nos podemos conectar al servicio web");
+//            }
+//        });
+//
+//    }
 
     @Override
     public int getItemCount() {

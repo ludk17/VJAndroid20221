@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
 import android.service.controls.Control;
@@ -37,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     List<Contact> contacts = new ArrayList<>();
+    SharedPreferences mSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,15 @@ public class MainActivity extends AppCompatActivity {
         Log.i("APP_VJ20202", "onCreate");
         setContentView(R.layout.activity_main);
 
+        mSharedPref = getSharedPreferences("com.example.androidvj20221.SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
-        Retrofit retrofit = RetrofitFactory.build();
+        String token = mSharedPref.getString("com.example.androidvj20221.TOKEN", "");
+
+        Log.i("APP_VJ20202", "El token es:" + token);
+
+
+
+        Retrofit retrofit = RetrofitFactory.build(this);
         ContactService service = retrofit.create(ContactService.class);
 
         Call<List<Contact>> call = service.getContacts();
@@ -73,10 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("APP_VJ20202", "No hubo conectividad con el servicio web");
             }
         });
-
-
-
-
 
     }
 
