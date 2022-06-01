@@ -2,6 +2,7 @@ package com.example.androidvj20221;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,10 +35,20 @@ public class ContactActivity extends AppCompatActivity {
         ImageView ivAvatar = findViewById(R.id.ivAvatar);
         TextView tvName = findViewById(R.id.tvContactName);
         TextView tvNumber = findViewById(R.id.tvContactNumber);
+        Button btnOpenMap = findViewById(R.id.btnOpenMap);
 
         Picasso.get().load("https://loremflickr.com/cache/resized/5238_30052482366_fc6e9350d5_b_640_480_nofilter.jpg").into(ivAvatar);
         tvName.setText(contact.name);
         tvNumber.setText(contact.number);
+
+
+        btnOpenMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

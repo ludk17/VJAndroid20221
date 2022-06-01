@@ -61,5 +61,14 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnOpenMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Ubicar en Mapa">
+
+        </Button>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
