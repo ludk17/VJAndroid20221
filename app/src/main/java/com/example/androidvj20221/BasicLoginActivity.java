@@ -48,6 +48,9 @@ public class BasicLoginActivity extends AppCompatActivity {
 
                 Log.i("APP_VJ20202", "preferencias guardada correctamente");
 
+                Intent intent = new Intent(BasicLoginActivity.this, MainActivity.class);
+                startActivity(intent);
+
             }
         });
 

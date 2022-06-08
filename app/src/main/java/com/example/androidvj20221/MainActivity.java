@@ -22,9 +22,12 @@ import android.widget.TextView;
 
 import com.example.androidvj20221.adapters.ContactAdapter;
 import com.example.androidvj20221.adapters.StringAdapter;
+import com.example.androidvj20221.dao.ContactDAO;
+import com.example.androidvj20221.database.AppDatabase;
 import com.example.androidvj20221.entities.Contact;
 import com.example.androidvj20221.factories.RetrofitFactory;
 import com.example.androidvj20221.services.ContactService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<Contact> contacts = new ArrayList<>();
     SharedPreferences mSharedPref;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +51,22 @@ public class MainActivity extends AppCompatActivity {
         Log.i("APP_VJ20202", "onCreate");
         setContentView(R.layout.activity_main);
 
+        db = AppDatabase.getDatabase(getApplicationContext());
+
         mSharedPref = getSharedPreferences("com.example.androidvj20221.SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
         String token = mSharedPref.getString("com.example.androidvj20221.TOKEN", "");
 
         Log.i("APP_VJ20202", "El token es:" + token);
+
+        FloatingActionButton fabButton = findViewById(R.id.fab);
+        fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateContactActitivy.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -69,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("APP_VJ20202", "Respuesta Correcta");
                     contacts = response.body();
 
+                    saveInDatabase(contacts);
+
                     ContactAdapter adapter = new ContactAdapter(contacts);
 
                     RecyclerView rv = findViewById(R.id.rvContacts);
@@ -84,6 +101,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void saveInDatabase(List<Contact> contacts) {
+        ContactDAO dao = db.contactDAO();
+        for (Contact contact : contacts) {
+            dao.create(contact);
+        }
     }
 
     private List<String> getStringContacts() {

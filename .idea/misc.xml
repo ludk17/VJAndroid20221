@@ -5,14 +5,19 @@
       <map>
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.19678714859437751" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.18954918032786885" />
+        <entry key="app/src/main/res/layout/activity_app.xml" value="0.17527173913043478" />
         <entry key="app/src/main/res/layout/activity_basic_login.xml" value="0.2513586956521739" />
         <entry key="app/src/main/res/layout/activity_contact.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_create_contact_actitivy.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/layout/activity_form_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2513586956521739" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.17798913043478262" />
         <entry key="app/src/main/res/layout/activity_second.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_third.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.17527173913043478" />
+        <entry key="app/src/main/res/layout/fragment_first2.xml" value="0.17527173913043478" />
+        <entry key="app/src/main/res/layout/fragment_first3.xml" value="0.17527173913043478" />
         <entry key="app/src/main/res/layout/item_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_string.xml" value="0.1" />
       </map>

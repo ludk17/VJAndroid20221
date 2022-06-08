@@ -1,8 +1,5 @@
 package com.example.androidvj20221;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -11,12 +8,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedInputStream;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -28,6 +30,7 @@ public class FormContactActivity extends AppCompatActivity {
     static final int REQUEST_CAMERA_PERMISSION = 100;
 
     ImageView ivPreview;
+    ImageView ivPreview2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,8 @@ public class FormContactActivity extends AppCompatActivity {
         Button btnGallery = findViewById(R.id.btnGallery);
 
         ivPreview = findViewById(R.id.ivPreview);
+        ivPreview2 = findViewById(R.id.ivPreview2);
+
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +86,42 @@ public class FormContactActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream .toByteArray();
+            String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            Log.i("APP_VJ20202", encodedImage);
+
             ivPreview.setImageBitmap(imageBitmap);
+
+            byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ivPreview2.setImageBitmap(decodedByte);
+
+
         }
         if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                 Bitmap imageBitmap = BitmapFactory.decodeStream(bufferedInputStream);
+
                 ivPreview.setImageBitmap(imageBitmap);
+
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                Log.i("APP_VJ20202", encodedImage);
+
+                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                ivPreview2.setImageBitmap(decodedByte);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

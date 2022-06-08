@@ -53,7 +53,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
         tvContactName.setText(contact.name);
         tvContactNumber.setText(contact.number);
-        Picasso.get().load("https://loremflickr.com/cache/resized/5238_30052482366_fc6e9350d5_b_640_480_nofilter.jpg").into(ivAvatar);
+        Picasso.get().load("https://assets.pokemon.com/assets/cms2/img/pokedex/full/005.png").into(ivAvatar);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
