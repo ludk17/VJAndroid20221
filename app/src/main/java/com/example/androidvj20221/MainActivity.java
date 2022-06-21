@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidvj20221.adapters.ContactAdapter;
 import com.example.androidvj20221.adapters.StringAdapter;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateContactActitivy.class);
                 startActivity(intent);
+
             }
         });
 

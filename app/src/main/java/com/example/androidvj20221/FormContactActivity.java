@@ -24,7 +24,7 @@ import java.io.InputStream;
 
 public class FormContactActivity extends AppCompatActivity {
 
-    static final int REQUEST_IMAGE_CAPTURE = 1000;
+    static final int REQUEST_IMAGE_CAPTURE = 1000; // estos son numeros cualquiera que el programador decide
     static final int REQUEST_PICK_IMAGE = 1001;
 
     static final int REQUEST_CAMERA_PERMISSION = 100;
